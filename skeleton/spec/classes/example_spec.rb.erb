@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe '<%= metadata.name %>' do
+include_context 'hiera_config'
   context 'supported operating systems' do
     ['Debian', 'RedHat'].each do |osfamily|
       describe "<%= metadata.name %> class without any parameters on #{osfamily}" do
