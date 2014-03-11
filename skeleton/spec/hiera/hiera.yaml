@@ -1,0 +1,8 @@
+---
+:backends:
+  - yaml
+:hierarchy:
+  - common
+  - "%{::role}"
+:yaml:
+  :datadir: 'spec/hiera'
