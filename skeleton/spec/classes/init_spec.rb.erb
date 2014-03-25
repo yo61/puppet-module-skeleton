@@ -1,0 +1,57 @@
+require 'spec_helper'
+
+common_facts = {
+  concat_basedir: '/tmp',
+  memorysize: '2 GB',
+  processorcount: '2',
+}
+
+supported_os = [
+  {
+    kernel: 'Linux',
+    osfamily: 'RedHat',
+    operatingsystem: 'redhat',
+    operatingsystemrelease: '6.4',
+  }
+]
+
+unsupported_os = [
+  {
+    kernel: 'Solaris',
+    osfamily: 'Solaris',
+    operatingsystem: 'Nexenta',
+  }
+]
+
+describe '<%= metadata.name %>' do
+  include_context 'pre_condition'
+  include_context 'hiera_config'
+
+  context 'supported operating systems' do
+    supported_os.each do |os|
+      let(:facts) { os.merge(common_facts) }
+      describe "<%= metadata.name %> class without any parameters on #{os[:operatingsystem]} #{os[:operatingsystemrelease]}" do
+        let(:params) {{ }}
+
+        it { should compile.with_all_deps }
+
+        it { should contain_class('<%= metadata.name %>::params') }
+        it { should contain_class('<%= metadata.name %>::install').that_comes_before('<%= metadata.name %>::config') }
+        it { should contain_class('<%= metadata.name %>::config') }
+        it { should contain_class('<%= metadata.name %>::service').that_subscribes_to('<%= metadata.name %>::config') }
+
+        it { should contain_service('<%= metadata.name %>') }
+        it { should contain_package('<%= metadata.name %>').with_ensure('present') }
+      end
+    end
+  end
+
+  context 'unsupported operating system' do
+    unsupported_os.each do |os|
+      describe "profile_base class without any parameters on #{os[:operatingsystem]} #{os[:operatingsystemrelease]}" do
+        let(:facts) { os.merge(common_facts) }
+        it { expect { should contain_package('<%= metadata.name %>') }.to raise_error(Puppet::Error, /Unsupported platform/) }
+      end
+    end
+  end
+end
