@@ -6,7 +6,7 @@
 #
 class <%= metadata.name %>::params{
   # these variables are surfaced as parameters in init.pp and may be over-ridden
-  $package_ensure = 'installed'
+  $package_ensure = 'present'
   $listen_port     = 2222
 
   # these variables are purely internal
