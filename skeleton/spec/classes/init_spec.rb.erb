@@ -40,6 +40,7 @@ describe '<%= metadata.name %>' do
 
         it { should compile.with_all_deps }
 
+        it { should contain_class('<%= metadata.name %>') }
         it { should contain_class('<%= metadata.name %>::params') }
         it { should contain_class('<%= metadata.name %>::install').that_comes_before('<%= metadata.name %>::config') }
         it { should contain_class('<%= metadata.name %>::config') }
@@ -47,6 +48,8 @@ describe '<%= metadata.name %>' do
 
         it { should contain_service('<%= metadata.name %>') }
         it { should contain_package('<%= metadata.name %>').with_ensure('present') }
+
+        it { should contain_file('/etc/<%= metadata.name %>.conf') }
       end
     end
   end
