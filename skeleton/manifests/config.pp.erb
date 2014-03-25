@@ -14,7 +14,7 @@ class <%= metadata.name %>::config(
 
   include ::<%= metadata.name %>::params
   file{$::<%= metadata.name %>::params::config_file:
-    content => template('<%= metadata.name %>/<%= metadata.name %>.conf.erb'),
+    content => template('<%= metadata.name %>/example.conf.erb'),
   }
 
 }
