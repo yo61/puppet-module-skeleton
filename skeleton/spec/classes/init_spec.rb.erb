@@ -24,14 +24,19 @@ unsupported_os = [
 ]
 
 describe '<%= metadata.name %>' do
-  include_context 'pre_condition'
   include_context 'hiera_config'
 
   context 'supported operating systems' do
     supported_os.each do |os|
       let(:facts) { os.merge(common_facts) }
-      describe "<%= metadata.name %> class without any parameters on #{os[:operatingsystem]} #{os[:operatingsystemrelease]}" do
-        let(:params) {{ }}
+      describe "<%= metadata.name %> class with all parameters on #{os[:operatingsystem]} #{os[:operatingsystemrelease]}" do
+        let(:params) {
+          {
+            param1 => 'one',
+            param2 => 'two',
+            param3 => 'three'
+          }
+        }
 
         it { should compile.with_all_deps }
 
