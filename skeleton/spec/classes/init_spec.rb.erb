@@ -55,7 +55,7 @@ describe '<%= metadata.name %>' do
     unsupported_os.each do |os|
       describe "profile_base class without any parameters on #{os[:operatingsystem]} #{os[:operatingsystemrelease]}" do
         let(:facts) { os.merge(common_facts) }
-        it { expect { should contain_package('<%= metadata.name %>') }.to raise_error(Puppet::Error, /Unsupported platform/) }
+        it { expect { should contain_package('<%= metadata.name %>') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
       end
     end
   end
