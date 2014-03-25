@@ -10,9 +10,9 @@ class <%= metadata.name %>::service(
 
   include ::<%= metadata.name %>::params
   service{$::<%= metadata.name %>::params::service_name:
-    ensure => $ensure,
-    enable => $enable,
-    hasstatus => $::<%= metadata.name %>::params::service_hasstatus,
+    ensure     => $ensure,
+    enable     => $enable,
+    hasstatus  => $::<%= metadata.name %>::params::service_hasstatus,
     hasrestart => $::<%= metadata.name %>::params::service_hasrestart,
   }
 
