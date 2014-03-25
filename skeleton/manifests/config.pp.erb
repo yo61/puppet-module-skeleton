@@ -2,5 +2,19 @@
 #
 # This class is called from <%= metadata.name %>
 #
-class <%= metadata.name %>::config {
+# The parameters are described there
+#
+class <%= metadata.name %>::config(
+  $param1,
+  $param2,
+  $param3,
+) {
+
+  # validate params here
+
+  include ::<%= metadata.name %>::params
+  file{$::<%= metadata.name %>::params::config_file:
+    content => template('<%= metadata.name %>/<%= metadata.name %>.conf.erb'),
+  }
+
 }

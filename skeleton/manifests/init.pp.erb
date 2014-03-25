@@ -1,21 +1,43 @@
-# == Class: <%= metadata.name %>
+# == Class <%= metadata.name %>
 #
-# Full description of class <%= metadata.name %> here.
+# Full description of class <%= metadata.name %> here
 #
 # === Parameters
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
+# [*param1*]
+#   Explanation of this parameter, what it affects, and any default
+# [*param2*]
+#   Explanation of this parameter, what it affects, and any default
+# [*param3*]
+#   Explanation of this parameter, what it affects, and any default
+# etc.
 #
-class <%= metadata.name %> (
-  $package_name = $<%= metadata.name %>::params::package_name,
-  $service_name = $<%= metadata.name %>::params::service_name,
-) inherits <%= metadata.name %>::params {
+class <%= metadata.name %>(
+  # mandatory params first
+  $param1,
+  $param2,
+  $param3         = $::<%= metadata.name %>::params::param3,
+  $package_ensure = $::<%= metadata.name %>::params::package_ensure,
+  $service_ensure = 'running',
+  $service_enable = true,
+) inherits ::<%= metadata.name %>::params {
 
-  # validate parameters here
+  # validate params here
 
-  class { '<%= metadata.name %>::install': } ->
-  class { '<%= metadata.name %>::config': } ~>
-  class { '<%= metadata.name %>::service': } ->
-  Class['<%= metadata.name %>']
+  class{'::<%= metadata.name %>::install':
+    version => $package_ensure
+  }->
+  class{'::<%= metadata.name %>::config':
+    param1 => $param1,
+    param2 => $param2,
+    param3 => $param3,
+  }~>
+  class{'::<%= metadata.name %>::service':
+    ensure => $service_ensure,
+    enable => $service_enable,
+  }
+
+  Class['::<%= metadata.name %>::install']~>
+  Class['::<%= metadata.name %>::service']
+
 }

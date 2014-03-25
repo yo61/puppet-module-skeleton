@@ -3,6 +3,6 @@
   - yaml
 :hierarchy:
   - common
-  - "%{::role}"
+  - module
 :yaml:
   :datadir: 'spec/hiera'

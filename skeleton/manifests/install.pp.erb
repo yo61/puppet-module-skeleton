@@ -1,8 +1,12 @@
 # == Class <%= metadata.name %>::install
 #
-class <%= metadata.name %>::install {
+class <%= metadata.name %>::install(
+  $version,
+) {
 
-  package { $<%= metadata.name %>::package_name:
-    ensure => present,
+  include ::<%= metadata.name %>::params
+  package{$::<%= metadata.name %>::params::package_name:
+    ensure => $version,
   }
+
 }
