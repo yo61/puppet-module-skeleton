@@ -26,8 +26,8 @@ class <%= metadata.name %>(
   # validate parameters here
 
   class{'::<%= metadata.name %>::install':
-    package_name => $package_name
-    version      => $package_ensure
+    package_name   => $package_name,
+    package_ensure => $package_ensure,
   }->
   class{'::<%= metadata.name %>::config':
     param1 => $param1,
