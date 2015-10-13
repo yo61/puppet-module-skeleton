@@ -14,7 +14,7 @@ class <%= metadata.name %> (
   $some_param,
   $some_param_with_default_value = 3,
   $package_name       = $::<%= metadata.name %>::params::package_name,
-  $package_ensure     = present
+  $package_ensure     = present,
   $service_name       = $::<%= metadata.name %>::params::service_name,
   $service_ensure     = running,
   $service_enable     = true,
@@ -28,6 +28,6 @@ class <%= metadata.name %> (
   class { '::<%= metadata.name %>::install': } ~>
   class { '::<%= metadata.name %>::config': } ~>
   class { '::<%= metadata.name %>::service': } ->
-  anchor { '::<%= metadata.name %>::end': }->
+  anchor { '::<%= metadata.name %>::end': }
 
 }

@@ -10,7 +10,7 @@ class <%= metadata.name %>::install {
   $package_ensure = $::<%= metadata.name %>::package_ensure
 
   package { $package_name:
-    ensure => package_ensure,
+    ensure => $package_ensure,
   }
 
 }

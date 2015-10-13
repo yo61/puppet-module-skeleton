@@ -13,8 +13,8 @@ describe '<%= metadata.name %>' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('<%= metadata.name %>::params') }
-          it { is_expected.to contain_class('<%= metadata.name %>::install').that_comes_before('<%= metadata.name %>::config') }
-          it { is_expected.to contain_class('<%= metadata.name %>::config') }
+          it { is_expected.to contain_class('<%= metadata.name %>::install') }
+          it { is_expected.to contain_class('<%= metadata.name %>::config').that_subscribes_to('<%= metadata.name %>::install') }
           it { is_expected.to contain_class('<%= metadata.name %>::service').that_subscribes_to('<%= metadata.name %>::config') }
 
           it { is_expected.to contain_service('<%= metadata.name %>') }
