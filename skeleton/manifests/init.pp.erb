@@ -11,14 +11,23 @@
 #   e.g. "Specify one or more upstream ntp servers as an array."
 #
 class <%= metadata.name %> (
-  $package_name = $::<%= metadata.name %>::params::package_name,
-  $service_name = $::<%= metadata.name %>::params::service_name,
+  $some_param,
+  $some_param_with_default_value = 3,
+  $package_name       = $::<%= metadata.name %>::params::package_name,
+  $package_ensure     = present
+  $service_name       = $::<%= metadata.name %>::params::service_name,
+  $service_ensure     = running,
+  $service_enable     = true,
+  $service_hasstatus  = $::<%= metadata.name %>::params::service_hasstatus,
+  $service_hasrestart = $::<%= metadata.name %>::params::service_hasrestart,
 ) inherits ::<%= metadata.name %>::params {
 
   # validate parameters here
 
-  class { '::<%= metadata.name %>::install': } ->
+  anchor { '::<%= metadata.name %>::begin': }->
+  class { '::<%= metadata.name %>::install': } ~>
   class { '::<%= metadata.name %>::config': } ~>
   class { '::<%= metadata.name %>::service': } ->
-  Class['::<%= metadata.name %>']
+  anchor { '::<%= metadata.name %>::end': }->
+
 }

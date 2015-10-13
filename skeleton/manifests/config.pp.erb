@@ -3,4 +3,10 @@
 # This class is called from <%= metadata.name %> for service config.
 #
 class <%= metadata.name %>::config {
+
+  assert_private()
+
+  $some_param = $::<%= metadata.name %>::some_param
+  $some_param_with_default_value = $::<%= metadata.name %>::some_param_with_default_value
+
 }

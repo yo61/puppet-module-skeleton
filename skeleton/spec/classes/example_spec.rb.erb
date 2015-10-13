@@ -8,7 +8,8 @@ describe '<%= metadata.name %>' do
           facts
         end
 
-        context "<%= metadata.name %> class without any parameters" do
+        context "<%= metadata.name %> class with some_param = 'foo'" do
+          let(:params) {{ some_param: 'foo' }}
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('<%= metadata.name %>::params') }

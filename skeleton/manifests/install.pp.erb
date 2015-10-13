@@ -4,7 +4,13 @@
 #
 class <%= metadata.name %>::install {
 
-  package { $::<%= metadata.name %>::package_name:
-    ensure => present,
+  assert_private()
+
+  $package_name = $::<%= metadata.name %>::package_name
+  $package_ensure = $::<%= metadata.name %>::package_ensure
+
+  package { $package_name:
+    ensure => package_ensure,
   }
+
 }

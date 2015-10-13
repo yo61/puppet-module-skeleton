@@ -5,10 +5,19 @@
 #
 class <%= metadata.name %>::service {
 
-  service { $::<%= metadata.name %>::service_name:
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
+  assert_private()
+
+  $service_name = $::<%= metadata.name %>::service_name
+  $service_ensure = $::<%= metadata.name %>::service_ensure
+  $service_enable = $::<%= metadata.name %>::service_enable
+  $service_hasstatus = $::<%= metadata.name %>::service_hasstatus
+  $service_hasrestart = $::<%= metadata.name %>::service_hasrestart
+
+  service { $service_name:
+    ensure     => $service_ensure,
+    enable     => $service_enable,
+    hasstatus  => $service_hasstatus,
+    hasrestart => $servive_hasrestart,
   }
+
 }

@@ -6,12 +6,16 @@
 class <%= metadata.name %>::params {
   case $::osfamily {
     'Debian': {
-      $package_name = '<%= metadata.name %>'
-      $service_name = '<%= metadata.name %>'
+      $package_name       = '<%= metadata.name %>'
+      $service_name       = '<%= metadata.name %>'
+      $service_hasstatus  = true
+      $service_hasrestart = true
     }
     'RedHat', 'Amazon': {
-      $package_name = '<%= metadata.name %>'
-      $service_name = '<%= metadata.name %>'
+      $package_name       = '<%= metadata.name %>'
+      $service_name       = '<%= metadata.name %>'
+      $service_hasstatus  = true
+      $service_hasrestart = true
     }
     default: {
       fail("${::operatingsystem} not supported")
