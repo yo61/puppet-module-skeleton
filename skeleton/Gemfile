@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
 group :test do
   gem "rake"
@@ -9,7 +9,7 @@ group :test do
   gem "metadata-json-lint"
   gem "rspec-puppet-facts"
   gem 'rubocop', '0.33.0'
-  gem 'simplecov'
+  gem 'simplecov', '>= 0.11.0'
   gem 'simplecov-console'
   gem 'nokogiri'
 
@@ -19,6 +19,7 @@ group :test do
   gem "puppet-lint-version_comparison-check"
   gem "puppet-lint-classes_and_types_beginning_with_digits-check"
   gem "puppet-lint-unquoted_string-check"
+  gem 'puppet-lint-resource_reference_syntax'
 end
 
 group :development do
