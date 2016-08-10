@@ -4,17 +4,13 @@
 #
 # The parameters are described there
 #
-class <%= metadata.name %>::config(
-  $param1,
-  $param2,
-  $param3,
-) {
+class <%= metadata.name %>::config {
 
-  # validate params here
+  assert_private()
 
   include ::<%= metadata.name %>::params
-  file{$::<%= metadata.name %>::params::config_file:
-    content => template('<%= metadata.name %>/example.conf.erb'),
+  $some_param = $::<%= metadata.name %>::some_param
+  $some_param_with_default_value = $::<%= metadata.name %>::some_param_with_default_value
   }
 
 }

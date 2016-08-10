@@ -12,14 +12,29 @@ Status](https://travis-ci.org/garethr/puppet-module-skeleton.svg?branch=master)]
 ## Installation
 
 As a feature, puppet module tool will use `~/.puppet/var/puppet-module/skeleton`
-as template for its `generate` command. The files provided here are
-meant to be better templates for use with the puppet module tool.
+(or `~/.puppetlabs/opt/puppet/cache/puppet-module/` for Puppet 4) as template for
+its `generate` command. The files provided here are meant to be better templates
+for use with the puppet module tool.
 
-As we don't want to have our .git files and this README in our skeleton, we export it like this:
+## Manual install
+
+As we don't want to have our .git files and this README in our skeleton, we export it like this : 
+
+### for puppet 3.x:
 
     git clone https://github.com/garethr/puppet-module-skeleton
     cd puppet-module-skeleton
     find skeleton -type f | git checkout-index --stdin --force --prefix="$HOME/.puppet/var/puppet-module/" --
+
+### for puppet 4.x
+
+    git clone https://github.com/garethr/puppet-module-skeleton
+    cd puppet-module-skeleton
+    find skeleton -type f | git checkout-index --stdin --force --prefix="$HOME/.puppetlabs/opt/puppet/cache/puppet-module/" --
+
+## the install.sh
+
+I provided a script installing the skeleton in the right place depending on the detected puppet version
 
 ## Usage
 
@@ -56,6 +71,7 @@ Of particular interst should be:
 * `rake spec` - run unit tests
 * `rake lint` - checks against the puppet style guide
 * `rake syntax` - to check your have valid puppet and erb syntax
+* `rake metadata_lint` - to check your have a valid metadata.json file
 
 ## Thanks
 

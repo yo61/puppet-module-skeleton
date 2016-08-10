@@ -4,16 +4,20 @@
 # It ensures the service is in the desired state
 #
 class <%= metadata.name %>::service(
-  $enable,
-  $ensure,
-) {
 
-  include ::<%= metadata.name %>::params
-  service{$::<%= metadata.name %>::params::service_name:
-    ensure     => $ensure,
-    enable     => $enable,
-    hasstatus  => $::<%= metadata.name %>::params::service_hasstatus,
-    hasrestart => $::<%= metadata.name %>::params::service_hasrestart,
+  assert_private()
+
+  $service_name = $::<%= metadata.name %>::service_name
+  $service_ensure = $::<%= metadata.name %>::service_ensure
+  $service_enable = $::<%= metadata.name %>::service_enable
+  $service_hasstatus = $::<%= metadata.name %>::service_hasstatus
+  $service_hasrestart = $::<%= metadata.name %>::service_hasrestart
+
+  service { $service_name:
+    ensure     => $service_ensure,
+    enable     => $service_enable,
+    hasstatus  => $service_hasstatus,
+    hasrestart => $servive_hasrestart,
   }
 
 }

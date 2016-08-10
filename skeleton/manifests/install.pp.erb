@@ -3,11 +3,14 @@
 # This class is called from <%= metadata.name %> for install.
 #
 class <%= metadata.name %>::install(
-  $package_ensure
+
+  assert_private()
+
+  $package_name = $::<%= metadata.name %>::package_name
+  $package_ensure = $::<%= metadata.name %>::package_ensure
 ) {
 
-  include ::<%= metadata.name %>::params
-  package{$::<%= metadata.name %>::params::package_name:
+  package { $package_name:
     ensure => $package_ensure,
   }
 

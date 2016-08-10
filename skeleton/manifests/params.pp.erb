@@ -12,8 +12,10 @@ class <%= metadata.name %>::params{
   # these variables are purely internal
   case $::osfamily {
     'Debian': {
-      $package_name = '<%= metadata.name %>'
-      $service_name = '<%= metadata.name %>'
+      $package_name       = '<%= metadata.name %>'
+      $service_name       = '<%= metadata.name %>'
+      $service_hasstatus  = true
+      $service_hasrestart = true
     }
     'RedHat', 'Amazon': {
       $package_name       = '<%= metadata.name %>'

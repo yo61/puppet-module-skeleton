@@ -8,14 +8,13 @@ describe '<%= metadata.name %>' do
           facts
         end
 
-        context "<%= metadata.name %> class without any parameters" do
-          let(:params) {{ }}
-
+        context "<%= metadata.name %> class with some_param = 'foo'" do
+          let(:params) {{ some_param: 'foo' }}
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('<%= metadata.name %>::params') }
-          it { is_expected.to contain_class('<%= metadata.name %>::install').that_comes_before('<%= metadata.name %>::config') }
-          it { is_expected.to contain_class('<%= metadata.name %>::config') }
+          it { is_expected.to contain_class('<%= metadata.name %>::install') }
+          it { is_expected.to contain_class('<%= metadata.name %>::config').that_subscribes_to('<%= metadata.name %>::install') }
           it { is_expected.to contain_class('<%= metadata.name %>::service').that_subscribes_to('<%= metadata.name %>::config') }
 
           it { is_expected.to contain_service('<%= metadata.name %>') }
@@ -27,10 +26,12 @@ describe '<%= metadata.name %>' do
 
   context 'unsupported operating system' do
     describe '<%= metadata.name %> class without any parameters on Solaris/Nexenta' do
-      let(:facts) {{
-        :osfamily        => 'Solaris',
-        :operatingsystem => 'Nexenta',
-      }}
+      let(:facts) do
+        {
+          :osfamily        => 'Solaris',
+          :operatingsystem => 'Nexenta',
+        }
+      end
 
       it { expect { is_expected.to contain_package('<%= metadata.name %>') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
     end

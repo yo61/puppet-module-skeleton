@@ -1,51 +1,46 @@
-# == Class: <%= metadata.name %>
+# Class: <%= metadata.name %>
+# ===========================
 #
 # Full description of class <%= metadata.name %> here.
 #
-# === Parameters
+# Parameters
+# ----------
 #
-# [*param1*]
-#   Explanation of this parameter, what it affects, and any default
+# * `sample parameter`
+#   Explanation of what this parameter affects and what it defaults to.
 # [*param2*]
 #   Explanation of this parameter, what it affects, and any default
-# [*param3*]
+#   e.g. "Specify one or more upstream ntp servers as an array."
 #   Explanation of this parameter, what it affects, and any default
 # etc.
 #
-class <%= metadata.name %>(
-  # mandatory params first
-  $param1,
+class <%= metadata.name %> (
+  $some_param,
+  $some_param_with_default_value = 3,
   $param2,
-  $param3         = $::<%= metadata.name %>::params::param3,
-  $package_name   = $::<%= metadata.name %>::params::package_name,
-  $package_ensure = $::<%= metadata.name %>::params::package_ensure,
-  $service_ensure = 'running',
+  $package_name       = $::<%= metadata.name %>::params::package_name,
+  $package_ensure     = present,
+  $service_name       = $::<%= metadata.name %>::params::service_name,
+  $service_ensure     = running,
+  $service_enable     = true,
+  $service_hasstatus  = $::<%= metadata.name %>::params::service_hasstatus,
+  $service_hasrestart = $::<%= metadata.name %>::params::service_hasrestart,
   $service_enable = true,
 ) inherits ::<%= metadata.name %>::params {
 
   # validate parameters here
 
-  class{'::<%= metadata.name %>::install':
-    package_name   => $package_name,
-    package_ensure => $package_ensure,
-  }->
-  class{'::<%= metadata.name %>::config':
-    param1 => $param1,
-    param2 => $param2,
-    param3 => $param3,
-  }~>
-  class{'::<%= metadata.name %>::service':
-    ensure => $service_ensure,
-    enable => $service_enable,
-  }
+  anchor { '::<%= metadata.name %>::begin': } ->
+  class { '::<%= metadata.name %>::install': } ->
+  class { '::<%= metadata.name %>::config': } ~>
+  class{'::<%= metadata.name %>::service': } ->
+  anchor { '::<%= metadata.name %>::end': } 
 
   Class['::<%= metadata.name %>::install']~>
-  Class['::<%= metadata.name %>::service']->
-  Class['::<%= metadata.name %>']
+  Class['::<%= metadata.name %>::service']
 
-  contain
-    '<%= metadata.name %>::config',
-    '<%= metadata.name %>::install',
-    '<%= metadata.name %>::service'
+  contain '<%= metadata.name %>::config'
+  contain '<%= metadata.name %>::install'
+  contain '<%= metadata.name %>::service'
 
 }
